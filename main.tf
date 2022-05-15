@@ -174,7 +174,7 @@ resource "aws_route_table" "public_rt" {
 resource "aws_route_table_association" "public" {
   depends_on = [aws_route_table.public_rt]
   count = length(var.subnets_cidr_public)
-  subnet_id      = element(aws_subnet.Public.*.id,count.index)
+  subnet_id      = element(aws_subnet.public.*.id,count.index)
   route_table_id = aws_route_table.public_rt.id
 }
 
