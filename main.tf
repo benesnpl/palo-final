@@ -200,13 +200,19 @@ resource "aws_route_table_association" "gwlbe" {
 }
 
 resource "aws_lb" "gwlb" {
+  depends_on 					   = [aws_subnet.GWLB]
   name                             = "GWLB-Private"
   load_balancer_type               = "gateway"
   enable_cross_zone_load_balancing = true
   subnets                          = [for subnet in aws_subnet.GWLB : subnet.id]
 }
 
-  resource "aws_vpc_endpoint_service" "vpc_end_serv" {
+
+resource "aws_vpc_endpoint_service" "vpc_end_serv" {
+  depends_on = [aws_lb.gwlb]
   acceptance_required        = false
   gateway_load_balancer_arns = [aws_lb.gwlb.arn]
+  tags = {
+    Name = ("VPCE-GWLB")
+  }
 }
