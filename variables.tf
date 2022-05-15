@@ -65,3 +65,23 @@ variable "rules_outbound_public_sg" {
     }
     ]
 }
+
+variable "rules_inbound_private_sg" {
+  default = [
+    {
+      port = 0
+      proto = "-1"
+      cidr_block = ["10.0.0.0/8","192.168.0.0/16","172.16.0.0/12","100.70.0.0/15"]
+    }
+    ]
+}
+
+variable "rules_outbound_private_sg" {
+  default = [
+    {
+      port = 0
+      proto = "-1"
+      cidr_block = ["0.0.0.0/0"]
+    }
+    ]
+}
