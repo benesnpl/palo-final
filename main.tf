@@ -104,7 +104,7 @@ resource "aws_internet_gateway" "main_igw" {
 }
 
 resource "aws_route_table" "mgmt_rt" {
-  depends_on = [aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
+  depends_on = [aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw,aws_vpn_connection.Miami]
   vpc_id = aws_vpc.main_vpc.id
   
   route {
@@ -136,7 +136,7 @@ resource "aws_route_table_association" "mgmt" {
 
 
 resource "aws_route_table" "private_rt" {
-  depends_on = [aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
+  depends_on = [aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw,aws_vpn_connection.Miami]
   vpc_id = aws_vpc.main_vpc.id
   
   route {
@@ -187,7 +187,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route_table" "gwlbe_rt" {
-  depends_on = [aws_ec2_transit_gateway.main_tgw]
+  depends_on = [aws_ec2_transit_gateway.main_tgw,aws_vpn_connection.Miami]
   vpc_id = aws_vpc.main_vpc.id
   
   route {
@@ -559,6 +559,7 @@ resource "aws_instance" "vm1" {
   subnet_id       = aws_subnet.public[0].id
   private_ips     = [var.public_eni_1]
   security_groups = [aws_security_group.public_sg.id]
+  depends_on                = [aws_instance.vm1,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw,aws_eip.mng1]	  
 
   attachment {
     instance     = aws_instance.vm1.id
@@ -570,7 +571,7 @@ resource "aws_network_interface" "public2" {
   subnet_id       = aws_subnet.public[1].id
   private_ips     = [var.public_eni_2]
   security_groups = [aws_security_group.public_sg.id]
-
+  depends_on                = [aws_instance.vm2,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw,aws_eip.mng2]
   attachment {
     instance     = aws_instance.vm2.id
     device_index = 2
@@ -601,7 +602,7 @@ resource "aws_network_interface" "private1" {
   subnet_id       = aws_subnet.Private[0].id
   private_ips     = [var.private_eni_1]
   security_groups = [aws_security_group.private_sg.id]
-
+  depends_on                = [aws_instance.vm1,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw,aws_eip.mng1]
   attachment {
     instance     = aws_instance.vm1.id
 	device_index = 3
@@ -612,6 +613,7 @@ resource "aws_network_interface" "private2" {
   subnet_id       = aws_subnet.Private[1].id
   private_ips     = [var.private_eni_2]
   security_groups = [aws_security_group.private_sg.id]
+  depends_on                = [aws_instance.vm2,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw,aws_eip.mng2]
 
   attachment {
     instance     = aws_instance.vm2.id
