@@ -184,3 +184,11 @@ variable "public_eni_1" {
 variable "public_eni_2" {
 	default = "10.160.103.132"
 }
+
+variable "private_eni_1" {
+	default = "10.160.102.20"
+}
+
+variable "private_eni_2" {
+	default = "10.160.103.20"
+}
