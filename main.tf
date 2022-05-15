@@ -203,5 +203,5 @@ resource "aws_lb" "gwlb" {
   name                             = "GWLB-Private"
   load_balancer_type               = "gateway"
   enable_cross_zone_load_balancing = true
-  subnets                          = [for v in var.subnets_cidr_gwlb : v.id]
+  subnets                          = [aws_subnet.TGW.*.id]
 }
