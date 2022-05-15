@@ -104,6 +104,7 @@ resource "aws_internet_gateway" "main_igw" {
 }
 
 resource "aws_route_table" "mgmt_rt" {
+  depends_on = [aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
   vpc_id = aws_vpc.main_vpc.id
   
   route {
@@ -127,7 +128,7 @@ resource "aws_route_table" "mgmt_rt" {
 }
 
 resource "aws_route_table_association" "mgmt" {
-  depends_on = [aws_route_table.mgmt_rt]
+  depends_on = [aws_route_table.mgmt_rt,aws_ec2_transit_gateway.main_tgw]
   count = length(var.subnets_cidr_mng)
   subnet_id      = element(aws_subnet.MNG.*.id,count.index)
   route_table_id = aws_route_table.mgmt_rt.id
@@ -185,6 +186,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route_table" "gwlbe_rt" {
+  depends_on = [aws_ec2_transit_gateway.main_tgw]
   vpc_id = aws_vpc.main_vpc.id
   
   route {
@@ -199,7 +201,7 @@ resource "aws_route_table" "gwlbe_rt" {
 }
 
 resource "aws_route_table_association" "gwlbe" {
-  depends_on = [aws_route_table.gwlbe_rt]
+  depends_on = [aws_route_table.gwlbe_rt,aws_ec2_transit_gateway.main_tgw,aws_route_table.gwlbe_rt]
   count = length(var.subnets_cidr_gwlbe)
   subnet_id      = element(aws_subnet.GWLBE.*.id,count.index)
   route_table_id = aws_route_table.gwlbe_rt.id
@@ -537,7 +539,7 @@ resource "aws_instance" "vm1" {
   }
   instance = aws_instance.vm1.id
   associate_with_private_ip = var.mgm_ip_address1
-  depends_on                = [aws_instance.vm1]
+  depends_on                = [aws_instance.vm1,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
 }
 
     resource "aws_eip" "mng2" {
@@ -547,7 +549,7 @@ resource "aws_instance" "vm1" {
   }
   instance = aws_instance.vm2.id
   associate_with_private_ip = var.mgm_ip_address2
-  depends_on                = [aws_instance.vm2]
+  depends_on                = [aws_instance.vm1,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
 }
   
 
@@ -581,7 +583,7 @@ resource "aws_eip" "pub1" {
   }
   network_interface = aws_network_interface.public1.id
   associate_with_private_ip = var.public_eni_1
-  depends_on                = [aws_network_interface.public1]
+  depends_on                = [aws_instance.vm1,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
 }
 
     resource "aws_eip" "pub2" {
@@ -591,7 +593,7 @@ resource "aws_eip" "pub1" {
   }
   network_interface = aws_network_interface.public2.id
   associate_with_private_ip = var.public_eni_2
-  depends_on                = [aws_network_interface.public2]
+  depends_on                = [aws_instance.vm1,aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
 }
 
 resource "aws_network_interface" "private1" {
