@@ -234,7 +234,7 @@ resource "aws_vpc_endpoint_service" "vpc_end_serv" {
 }
 
   resource "aws_lb_target_group_attachment" "register-tgp" {
-  target_group_arn = aws_alb_target_group.tgt_group.arn
+  target_group_arn = aws_lb_target_group.tgt_group.arn
   target_id        = "10.160.10.1"
   port             = 443
 }
