@@ -571,6 +571,7 @@ resource "aws_instance" "vm1" {
 
   attachment {
     instance     = aws_instance.vm1.id
+    device_index = 1
   }
 }
 
@@ -581,5 +582,6 @@ resource "aws_network_interface" "public2" {
 
   attachment {
     instance     = aws_instance.vm2.id
+    device_index = 1
   }
 }
