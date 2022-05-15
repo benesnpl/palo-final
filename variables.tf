@@ -178,9 +178,9 @@ variable "mgm_ip_address2" {
 }
 
 variable "public_eni_1" {
-	default = ["10.160.102.132"]
+	default = "10.160.102.132"
 }
 
 variable "public_eni_2" {
-	default = ["10.160.103.132"]
+	default = "10.160.103.132"
 }
