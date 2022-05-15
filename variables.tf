@@ -41,7 +41,7 @@ variable "subnets_cidr_gwlb" {
 	default = ["10.160.102.48/28","10.160.103.48/28"]
 }
 
-variable "subnets_cidr_gwlbw" {
+variable "subnets_cidr_gwlbe" {
 	type = list
 	default = ["10.160.102.32/28","10.160.103.32/28"]
 }
