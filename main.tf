@@ -120,7 +120,7 @@ resource "aws_route_table" "mgmt_rt" {
   }
   
   tags = {
-    Name = ("mgmt-rt"])
+    Name = ("mgmt-rt")
   }
 }
 
