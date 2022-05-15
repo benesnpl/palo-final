@@ -255,3 +255,10 @@ resource "aws_vpc_endpoint_service" "vpc_end_serv" {
     target_group_arn = aws_lb_target_group.tgt_group.arn
   }
 }
+
+resource "aws_vpc_endpoint" "az1" {
+  service_name      = aws_vpc_endpoint_service.vpc_end_serv.service_name
+  subnet_ids        = [for subnet in aws_subnet.GWLBE : subnet[0].id]
+  vpc_endpoint_type = aws_vpc_endpoint_service.vpc_end_serv.service_type
+  vpc_id            = aws_vpc.main_vpc.id
+}
