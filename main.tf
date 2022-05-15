@@ -126,7 +126,7 @@ resource "aws_route_table" "mgmt_rt" {
 
 resource "aws_route_table_association" "mgmt" {
   depends_on = [aws_route_table.mgmt_rt]
-  count = length(var.subnets_cidr_mgm)
-  subnet_id      = element(aws_subnet.mgm.*.id,count.index)
+  count = length(var.subnets_cidr_mng)
+  subnet_id      = element(aws_subnet.mng.*.id,count.index)
   route_table_id = aws_route_table.mgmt_rt.id
 }
