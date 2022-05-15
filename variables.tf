@@ -169,12 +169,18 @@ variable "ssh_key_name" {
 	default = "firewall"
 }
 
-variable "private_ip_address1" {
-	default = "10.160.102.20"
+variable "mgm_ip_address1" {
+	default = "10.160.102.10"
 }
 
-variable "private_ip_address2" {
-	default = "10.160.103.20"
+variable "mgm_ip_address2" {
+	default = "10.160.103.10"
 }
 
+variable "public_eni_1" {
+	default = ["10.160.102.132"]
+}
 
+variable "public_eni_2" {
+	default = ["10.160.103.132"]
+}
