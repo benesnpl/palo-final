@@ -507,3 +507,25 @@ resource "aws_instance" "vm1" {
   }
 
 }
+
+  resource "aws_instance" "vm2" {
+  ami                                  = data.aws_ami.panorama_ami.id
+  instance_type                        = var.instance_type
+  availability_zone                    = var.azs[1]
+  key_name                             = var.ssh_key_name
+  private_ip                           = var.private_ip_address2
+  subnet_id                            = aws_subnet.private[1].id
+  vpc_security_group_ids               = [aws_security_group.MGMT_sg.id]
+  disable_api_termination              = false
+  instance_initiated_shutdown_behavior = "stop"
+  ebs_optimized                        = true
+  monitoring                           = false
+  tags = {
+    Name = "vmseries-b"
+  }
+
+  root_block_device {
+    delete_on_termination = true
+  }
+
+}
