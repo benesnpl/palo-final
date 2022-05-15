@@ -235,6 +235,6 @@ resource "aws_vpc_endpoint_service" "vpc_end_serv" {
 
   resource "aws_lb_target_group_attachment" "register-tgp" {
   target_group_arn = aws_lb_target_group.tgt_group.arn
-  target_id        = ["10.160.102.20","10.160.103.20"]
+  target_ids        = ["10.160.102.20","10.160.103.20"]
   port             = 6081
 }
