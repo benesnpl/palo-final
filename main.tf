@@ -198,3 +198,10 @@ resource "aws_route_table_association" "gwlbe" {
   subnet_id      = element(aws_subnet.GWLBE.*.id,count.index)
   route_table_id = aws_route_table.gwlbe_rt.id
 }
+
+resource "aws_lb" "gwlb" {
+  name                             = "GWLB-Private"
+  load_balancer_type               = "gateway"
+  enable_cross_zone_load_balancing = true
+  subnets                          = [for v in var.subnets_cidr_gwlb : v.id]
+}
