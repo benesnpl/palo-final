@@ -100,3 +100,33 @@ resource "aws_internet_gateway" "main_igw" {
     Name = join("", [var.coid, "-IGW"])
   }
 }
+
+resource "aws_route_table" "mgmt_rt" {
+  vpc_id = aws_vpc.main_vpc.id
+  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main_igw.id
+  }
+  
+  route {
+    cidr_block = "10.159.94.0/23"
+    gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+  
+   route {
+    cidr_block = "100.70.0.0/15"
+    gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+  
+  tags = {
+    Name = ("mgmt-rt"])
+  }
+}
+
+resource "aws_route_table_association" "mgmt" {
+  depends_on = [aws_route_table.mgmt_rt]
+  count = length(var.subnets_cidr_mgm)
+  subnet_id      = element(aws_subnet.mgm.*.id,count.index)
+  route_table_id = aws_route_table.mgmt_rt.id
+}
