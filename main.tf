@@ -136,6 +136,7 @@ resource "aws_route_table_association" "mgmt" {
 
 
 resource "aws_route_table" "private_rt" {
+  depends_on = [aws_internet_gateway.main_igw,aws_ec2_transit_gateway.main_tgw]
   vpc_id = aws_vpc.main_vpc.id
   
   route {
