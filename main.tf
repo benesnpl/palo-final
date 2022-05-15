@@ -75,6 +75,7 @@ resource "aws_subnet" "GWLBE" {
   }
 }
 
+
 resource "aws_ec2_transit_gateway" "main_tgw" {
   description = "TGW"
   auto_accept_shared_attachments = "enable"
@@ -95,6 +96,7 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-main" {
 }
 
 resource "aws_internet_gateway" "main_igw" {
+  depends_on = [aws_ec2_transit_gateway.main_tgw,aws_internet_gateway.main_igw]
   vpc_id = aws_vpc.main_vpc.id
   tags = {
     Name = join("", [var.coid, "-IGW"])
@@ -129,4 +131,70 @@ resource "aws_route_table_association" "mgmt" {
   count = length(var.subnets_cidr_mng)
   subnet_id      = element(aws_subnet.MNG.*.id,count.index)
   route_table_id = aws_route_table.mgmt_rt.id
+}
+
+
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.main_vpc.id
+  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+  
+  
+  tags = {
+    Name = ("Private-rt")
+  }
+}
+
+resource "aws_route_table_association" "prvt" {
+  depends_on = [aws_route_table.private_rt]
+  count = length(var.subnets_cidr_private)
+  subnet_id      = element(aws_subnet.Private.*.id,count.index)
+  route_table_id = aws_route_table.private_rt.id
+}
+
+
+
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.main_vpc.id
+  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main_igw.id
+  }
+  
+  
+  tags = {
+    Name = ("Public-rt")
+  }
+}
+
+resource "aws_route_table_association" "public" {
+  depends_on = [aws_route_table.public_rt]
+  count = length(var.subnets_cidr_public)
+  subnet_id      = element(aws_subnet.Public.*.id,count.index)
+  route_table_id = aws_route_table.public_rt.id
+}
+
+resource "aws_route_table" "gwlbe_rt" {
+  vpc_id = aws_vpc.main_vpc.id
+  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_ec2_transit_gateway.main_tgw.id
+  }
+  
+  
+  tags = {
+    Name = ("Public-rt")
+  }
+}
+
+resource "aws_route_table_association" "gwlbe" {
+  depends_on = [aws_route_table.gwlbe_rt]
+  count = length(var.subnets_cidr_gwlbe)
+  subnet_id      = element(aws_subnet.GWLBE.*.id,count.index)
+  route_table_id = aws_route_table.gwlbe_rt.id
 }
