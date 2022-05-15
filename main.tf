@@ -492,7 +492,7 @@ resource "aws_instance" "vm1" {
   availability_zone                    = var.azs[0]
   key_name                             = var.ssh_key_name
   private_ip                           = var.private_ip_address1
-  subnet_id                            = aws_subnet.private[0].id
+  subnet_id                            = aws_subnet.Private[0].id
   vpc_security_group_ids               = [aws_security_group.MGMT_sg.id]
   disable_api_termination              = false
   instance_initiated_shutdown_behavior = "stop"
