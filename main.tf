@@ -565,7 +565,7 @@ resource "aws_instance" "vm1" {
 }
 
   resource "aws_network_interface" "public1" {
-  subnet_id       = aws_subnet.Public[0].id
+  subnet_id       = aws_subnet.public[0].id
   private_ips     = [var.public_eni_1]
   security_groups = [aws_security_group.public_sg.id]
 
@@ -575,7 +575,7 @@ resource "aws_instance" "vm1" {
 }
 
 resource "aws_network_interface" "public2" {
-  subnet_id       = aws_subnet.Public[1].id
+  subnet_id       = aws_subnet.public[1].id
   private_ips     = [var.public_eni_2]
   security_groups = [aws_security_group.public_sg.id]
 
