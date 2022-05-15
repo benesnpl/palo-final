@@ -559,7 +559,7 @@ resource "aws_instance" "vm1" {
 
   attachment {
     instance     = aws_instance.vm1.id
-    device_index = 1
+    device_index = 2
   }
 }
 
@@ -570,7 +570,7 @@ resource "aws_network_interface" "public2" {
 
   attachment {
     instance     = aws_instance.vm2.id
-    device_index = 1
+    device_index = 2
   }
 }
 
@@ -579,9 +579,9 @@ resource "aws_eip" "pub1" {
   tags = {
     Name = ("PUB1-EIP")
   }
-  instance = aws_instance.vm1.id
+  network_interface = aws_network_interface.public1.id
   associate_with_private_ip = var.public_eni_1
-  depends_on                = [aws_instance.vm1]
+  depends_on                = [aws_network_interface.public1]
 }
 
     resource "aws_eip" "pub2" {
@@ -589,9 +589,9 @@ resource "aws_eip" "pub1" {
   tags = {
     Name = ("PUB2-EIP")
   }
-  instance = aws_instance.vm2.id
+  network_interface = aws_network_interface.public2.id
   associate_with_private_ip = var.public_eni_2
-  depends_on                = [aws_instance.vm2]
+  depends_on                = [aws_network_interface.public2]
 }
 
 resource "aws_network_interface" "private1" {
@@ -601,7 +601,7 @@ resource "aws_network_interface" "private1" {
 
   attachment {
     instance     = aws_instance.vm1.id
-	device_index = 2
+	device_index = 3
   }
 }
 
@@ -612,6 +612,6 @@ resource "aws_network_interface" "private2" {
 
   attachment {
     instance     = aws_instance.vm2.id
-	device_index = 2
+	device_index = 3
   }
 }
