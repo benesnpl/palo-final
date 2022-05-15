@@ -46,3 +46,22 @@ variable "subnets_cidr_gwlbe" {
 	default = ["10.160.102.32/28","10.160.103.32/28"]
 }
 
+variable "rules_inbound_public_sg" {
+  default = [
+    {
+      port = 0
+      proto = "-1"
+      cidr_block = ["0.0.0.0/0"]
+    }
+    ]
+}
+
+variable "rules_outbound_public_sg" {
+  default = [
+    {
+      port = 0
+      proto = "-1"
+      cidr_block = ["0.0.0.0/0"]
+    }
+    ]
+}
