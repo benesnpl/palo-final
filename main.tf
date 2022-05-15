@@ -408,3 +408,23 @@ resource "aws_route_table_association" "tgw2" {
     Name = join("", [var.coid, "-MGMT-sg"])
   }
 }
+
+resource "aws_customer_gateway" "oakbrook" {
+  bgp_asn    = 65000
+  ip_address = var.il_external
+  type       = "ipsec.1"
+
+  tags = {
+    Name = join("", [var.coid, "-Oakbrook-CGW"])
+  }
+}
+
+resource "aws_customer_gateway" "miami" {
+  bgp_asn    = 65000
+  ip_address = var.fl_external
+  type       = "ipsec.1"
+
+  tags = {
+    Name = join("", [var.coid, "-Miami-CGW"])
+  }
+} 
