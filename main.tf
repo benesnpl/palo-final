@@ -246,3 +246,12 @@ resource "aws_vpc_endpoint_service" "vpc_end_serv" {
   target_id        = "10.160.103.20"
   port             = 6081
 }
+  
+  resource "aws_lb_listener" "listener" {
+  depends_on       = [aws_lb_target_group_attachment.register-tgp2,aws_lb_target_group_attachment.register-tgp2]
+  load_balancer_arn = aws_lb.gwlb.arn
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.tgt_group.arn
+  }
+}
