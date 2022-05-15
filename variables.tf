@@ -93,45 +93,45 @@ variable "rules_inbound_mgmt_sg" {
       port = 22
       proto = "tcp"
       cidr_block = ["10.159.94.0/23"]
-    }
+    },
 	
 	{
       port = 443
       proto = "tcp"
       cidr_block = ["10.159.94.0/23"]
-    }
+    },
 	
 	
 	{
       port = 161
       proto = "udp"
       cidr_block = ["10.159.94.0/23"]
-    }
+    },
 	
 	{
       port = 8
       proto = "icmp"
       cidr_block = ["10.159.94.0/23"]
-    }
+    },
 	
 	{
       port = 22
       proto = "tcp"
       cidr_block = ["100.70.0.0/15"]
-    }
+    },
 	
 	{
       port = 443
       proto = "tcp"
       cidr_block = ["100.70.0.0/15"]
-    }
+    },
 	
 	
 	{
       port = 161
       proto = "udp"
       cidr_block = ["100.70.0.0/15"]
-    }
+    },
 	
 	{
       port = 8
