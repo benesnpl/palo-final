@@ -268,7 +268,7 @@ resource "aws_vpc_endpoint" "az1" {
 
 resource "aws_vpc_endpoint" "az2" {
   service_name      = aws_vpc_endpoint_service.vpc_end_serv.service_name
-  subnet_ids        = [for subnet in aws_subnet.GWLBE : subnet[1].id]
+  subnet_ids        = [aws_subnet.GWLBE[1].id]
   vpc_endpoint_type = aws_vpc_endpoint_service.vpc_end_serv.service_type
   vpc_id            = aws_vpc.main_vpc.id
   tags = {
