@@ -160,3 +160,21 @@ variable "il_external" {
 variable "fl_external" {
 	default = "62.103.97.241"
 }
+
+variable "instance_type" {
+	default = "m5.2xlarge"
+}
+
+variable "ssh_key_name" {
+	default = "firewall"
+}
+
+variable "private_ip_address1" {
+	default = "10.160.102.20"
+}
+
+variable "private_ip_address2" {
+	default = "10.160.103.20"
+}
+
+
