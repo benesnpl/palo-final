@@ -492,7 +492,7 @@ resource "aws_instance" "vm1" {
   availability_zone                    = var.azs[0]
   key_name                             = var.ssh_key_name
   private_ip                           = var.mgm_ip_address1
-  subnet_id                            = aws_subnet.Private[0].id
+  subnet_id                            = aws_subnet.MNG[0].id
   vpc_security_group_ids               = [aws_security_group.MGMT_sg.id]
   disable_api_termination              = false
   instance_initiated_shutdown_behavior = "stop"
@@ -514,7 +514,7 @@ resource "aws_instance" "vm1" {
   availability_zone                    = var.azs[1]
   key_name                             = var.ssh_key_name
   private_ip                           = var.mgm_ip_address2
-  subnet_id                            = aws_subnet.Private[1].id
+  subnet_id                            = aws_subnet.MNG[1].id
   vpc_security_group_ids               = [aws_security_group.MGMT_sg.id]
   disable_api_termination              = false
   instance_initiated_shutdown_behavior = "stop"
@@ -550,19 +550,7 @@ resource "aws_instance" "vm1" {
   depends_on                = [aws_instance.vm2]
 }
   
-   resource "aws_eip" "pub1" {
-  vpc              = true
-  tags = {
-    Name = ("PUB1-EIP")
-  }
-}
-  
-   resource "aws_eip" "pub2" {
-  vpc              = true
-  tags = {
-    Name = ("PUB2-EIP")
-  }
-}
+
 
   resource "aws_network_interface" "public1" {
   subnet_id       = aws_subnet.public[0].id
@@ -583,5 +571,47 @@ resource "aws_network_interface" "public2" {
   attachment {
     instance     = aws_instance.vm2.id
     device_index = 1
+  }
+}
+
+resource "aws_eip" "pub1" {
+  vpc              = true
+  tags = {
+    Name = ("PUB1-EIP")
+  }
+  instance = aws_instance.vm1.id
+  associate_with_private_ip = var.public_eni_1
+  depends_on                = [aws_instance.vm1]
+}
+
+    resource "aws_eip" "pub2" {
+  vpc              = true
+  tags = {
+    Name = ("PUB2-EIP")
+  }
+  instance = aws_instance.vm2.id
+  associate_with_private_ip = var.public_eni_2
+  depends_on                = [aws_instance.vm2]
+}
+
+resource "aws_network_interface" "private1" {
+  subnet_id       = aws_subnet.Private[0].id
+  private_ips     = [var.private_eni_1]
+  security_groups = [aws_security_group.private_sg.id]
+
+  attachment {
+    instance     = aws_instance.vm1.id
+	device_index = 2
+  }
+}
+
+resource "aws_network_interface" "private2" {
+  subnet_id       = aws_subnet.Private[1].id
+  private_ips     = [var.private_eni_2]
+  security_groups = [aws_security_group.private_sg.id]
+
+  attachment {
+    instance     = aws_instance.vm2.id
+	device_index = 2
   }
 }
