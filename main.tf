@@ -473,3 +473,37 @@ resource "aws_ec2_transit_gateway_route" "mia_vpn" {
   transit_gateway_route_table_id = aws_ec2_transit_gateway.main_tgw.association_default_route_table_id
   blackhole                      = false
 }
+
+  data "aws_ami" "panorama_ami" {
+  most_recent = true
+  owners      = ["aws-marketplace"]
+
+  filter {
+    name   = "name"
+    values = ["PA-VM-AWS*"]
+  }
+} 
+
+
+
+resource "aws_instance" "vm1" {
+  ami                                  = data.aws_ami.panorama_ami.id
+  instance_type                        = var.instance_type
+  availability_zone                    = var.azs[0]
+  key_name                             = var.ssh_key_name
+  private_ip                           = var.private_ip_address1
+  subnet_id                            = aws_subnet.private[0].id
+  vpc_security_group_ids               = [aws_security_group.MGMT_sg.id]
+  disable_api_termination              = false
+  instance_initiated_shutdown_behavior = "stop"
+  ebs_optimized                        = true
+  monitoring                           = false
+  tags = {
+    Name = "vmseries-a"
+  }
+
+  root_block_device {
+    delete_on_termination = true
+  }
+
+}
