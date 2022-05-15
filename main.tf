@@ -484,33 +484,7 @@ resource "aws_ec2_transit_gateway_route" "mia_vpn" {
   }
 } 
 
-  resource "aws_eip" "mng1" {
-  vpc              = true
-  tags = {
-    Name = ("MGMT1-EIP")
-  }
-}
-
-    resource "aws_eip" "mng2" {
-  vpc              = true
-  tags = {
-    Name = ("MGMT2-EIP")
-  }
-}
-  
-   resource "aws_eip" "pub1" {
-  vpc              = true
-  tags = {
-    Name = ("PUB1-EIP")
-  }
-}
-  
-   resource "aws_eip" "pub2" {
-  vpc              = true
-  tags = {
-    Name = ("PUB2-EIP")
-  }
-}
+ 
 
 resource "aws_instance" "vm1" {
   ami                                  = data.aws_ami.panorama_ami.id
@@ -518,7 +492,6 @@ resource "aws_instance" "vm1" {
   availability_zone                    = var.azs[0]
   key_name                             = var.ssh_key_name
   private_ip                           = var.private_ip_address1
-  public_ip                            = aws_eip.mng1
   subnet_id                            = aws_subnet.Private[0].id
   vpc_security_group_ids               = [aws_security_group.MGMT_sg.id]
   disable_api_termination              = false
@@ -541,7 +514,6 @@ resource "aws_instance" "vm1" {
   availability_zone                    = var.azs[1]
   key_name                             = var.ssh_key_name
   private_ip                           = var.private_ip_address2
-  public_ip                            = aws_eip.mng2
   subnet_id                            = aws_subnet.Private[1].id
   vpc_security_group_ids               = [aws_security_group.MGMT_sg.id]
   disable_api_termination              = false
@@ -556,4 +528,38 @@ resource "aws_instance" "vm1" {
     delete_on_termination = true
   }
 
+}
+
+ resource "aws_eip" "mng1" {
+  vpc              = true
+  tags = {
+    Name = ("MGMT1-EIP")
+  }
+  instance = aws_instance.vm1.id
+  associate_with_private_ip = var.private_ip_address1
+  depends_on                = [aws_instance.vm1]
+}
+
+    resource "aws_eip" "mng2" {
+  vpc              = true
+  tags = {
+    Name = ("MGMT2-EIP")
+  }
+  instance = aws_instance.vm2.id
+  associate_with_private_ip = var.private_ip_address2
+  depends_on                = [aws_instance.vm2]
+}
+  
+   resource "aws_eip" "pub1" {
+  vpc              = true
+  tags = {
+    Name = ("PUB1-EIP")
+  }
+}
+  
+   resource "aws_eip" "pub2" {
+  vpc              = true
+  tags = {
+    Name = ("PUB2-EIP")
+  }
 }
