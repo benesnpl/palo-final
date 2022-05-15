@@ -205,3 +205,8 @@ resource "aws_lb" "gwlb" {
   enable_cross_zone_load_balancing = true
   subnets                          = [for subnet in aws_subnet.GWLB : subnet.id]
 }
+
+  resource "aws_vpc_endpoint_service" "vpc_end_serv" {
+  acceptance_required        = false
+  gateway_load_balancer_arns = [aws_lb.gwlb.arn]
+}
