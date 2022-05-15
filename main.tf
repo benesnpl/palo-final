@@ -216,3 +216,19 @@ resource "aws_vpc_endpoint_service" "vpc_end_serv" {
     Name = ("VPCE-GWLB")
   }
 }
+
+  resource "aws_lb_target_group" "tgt_group" {
+  name                 = "GWLB-Group"
+  vpc_id               = aws_vpc.main_vpc.id
+  target_type          = "ip"
+  protocol             = "GENEVE"
+  port                 = "6081"
+
+  health_check {
+    enabled             = true
+    interval            = 5
+    path                = "/php/login.php"
+    port                = 443
+    protocol            = "HTTPS"
+  }
+}
