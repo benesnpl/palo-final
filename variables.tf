@@ -152,3 +152,11 @@ variable "rules_outbound_mgmt_sg" {
     }
     ]
 }
+
+variable "il_external" {
+	default = "207.223.34.132"
+}
+
+variable "fl_external" {
+	default = "62.103.97.241"
+}
