@@ -188,7 +188,7 @@ resource "aws_route_table" "gwlbe_rt" {
   
   
   tags = {
-    Name = ("Public-rt")
+    Name = ("GWLBE-rt")
   }
 }
 
