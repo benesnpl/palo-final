@@ -143,7 +143,7 @@ variable "rules_inbound_mgmt_sg" {
     ]
 }
 
-variable "rules_outbound_private_sg" {
+variable "rules_outbound_mgmt_sg" {
   default = [
     {
       port = 0
