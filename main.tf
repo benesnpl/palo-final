@@ -84,7 +84,7 @@ resource "aws_ec2_transit_gateway" "main_tgw" {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-main" {
-  depends_on = [aws_subnet.tgw,aws_ec2_transit_gateway.main_tgw]
+  depends_on = [aws_subnet.TGW,aws_ec2_transit_gateway.main_tgw]
   subnet_ids         = "${aws_subnet.TGW.*.id}"
   transit_gateway_id = aws_ec2_transit_gateway.main_tgw.id
   vpc_id             = aws_vpc.main_vpc.id
