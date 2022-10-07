@@ -491,7 +491,7 @@ data "aws_ami" "firewall" {
  
 
 resource "aws_instance" "vm1" {
-  ami                                  = data.aws_ami.panorama_ami.id
+  ami                                  = data.aws_ami.firewall.id
   instance_type                        = var.instance_type
   availability_zone                    = var.azs[0]
   key_name                             = var.ssh_key_name
@@ -517,7 +517,7 @@ resource "aws_instance" "vm1" {
 }
 
   resource "aws_instance" "vm2" {
-  ami                                  = data.aws_ami.panorama_ami.id
+  ami                                  = data.aws_ami.firewall.id
   instance_type                        = var.instance_type
   availability_zone                    = var.azs[1]
   key_name                             = var.ssh_key_name
