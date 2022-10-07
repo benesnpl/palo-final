@@ -2,6 +2,15 @@ variable "aws_region" {
 	default = "us-east-1"
 }
 
+variable "aws_access_key_id" {
+	default = "nul"
+}
+
+variable "aws_secret_access_key" {
+	default = "nul"
+}
+
+
 variable "vpc_cidr" {
 	default = "192.168.1.0/23"
 	
