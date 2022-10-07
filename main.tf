@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_vpc" "main_vpc" {
-  cidr_block       					         = "10.160.102.0/23"
+  cidr_block       					         = var.vpc_cidr
   tags = {
     Name = join("", [var.coid, "-VPC"])
   }
@@ -245,14 +245,14 @@ resource "aws_vpc_endpoint_service" "vpc_end_serv" {
   resource "aws_lb_target_group_attachment" "register-tgp1" {
   depends_on       = [aws_lb_target_group.tgt_group]
   target_group_arn = aws_lb_target_group.tgt_group.arn
-  target_id        = "10.160.102.20"
+  target_id        = "192.168.0.20"
   port             = 6081
 }
 
   resource "aws_lb_target_group_attachment" "register-tgp2" {
   depends_on       = [aws_lb_target_group.tgt_group]
   target_group_arn = aws_lb_target_group.tgt_group.arn
-  target_id        = "10.160.103.20"
+  target_id        = "192.168.1.20"
   port             = 6081
 }
   
