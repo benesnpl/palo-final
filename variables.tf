@@ -1,49 +1,50 @@
 variable "aws_region" {
-	default = null
+	default = "us-east-1"
 }
 
 variable "vpc_cidr" {
-	default = null
+	default = "192.168.1.0/23"
+	
 }
 
 variable "coid" {
-	default = null
+	default = "TEST"
 }
 
 variable "azs" {
 	type = list
-	default = null
+	default = ["us-east-1a","us-east-1b"]
 }
 
 variable "subnets_cidr_public" {
 	type = list
-	default = null
+	default = ["192.168.0.128/25","192.168.1.128/25"]
 }
 
 variable "subnets_cidr_private" {
 	type = list
-	default = null
+	default = ["192.168.0.16/28","192.168.1.16/28"]
 }
 
 variable "subnets_cidr_mng" {
 	type = list
-	default = null
+	default = ["192.168.0.0/28","192.168.1.0/28"]
 }
 
 variable "subnets_cidr_tgw" {
 	type = list
-	default = null
+	default = ["192.168.0.32/28","192.168.1.32/28"]
 }
 
 
 variable "subnets_cidr_gwlb" {
 	type = list
-	default = null
+	default = ["192.168.0.64/28","192.168.1.64/28"]
 }
 
 variable "subnets_cidr_gwlbe" {
 	type = list
-	default = null
+	default = ["192.168.0.48/28","192.168.1.48/28"]
 }
 
 variable "rules_inbound_public_sg" {
@@ -154,41 +155,41 @@ variable "rules_outbound_mgmt_sg" {
 }
 
 variable "il_external" {
-	default = null
+	default = "4.4.4.4"
 }
 
 variable "fl_external" {
-	default = null
+	default = "8.8.8.8"
 }
 
 variable "instance_type" {
-	default = null
+	default = "m5.xlarge"
 }
 
 variable "ssh_key_name" {
-	default = null
+	default = "firewall"
 }
 
 variable "mgm_ip_address1" {
-	default = null
+	default = "192.168.0.10"
 }
 
 variable "mgm_ip_address2" {
-	default = null
+	default = "192.168.1.10"
 }
 
 variable "public_eni_1" {
-	default = null
+	default = "192.168.0.135"
 }
 
 variable "public_eni_2" {
-	default = null
+	default = "192.168.1.135"
 }
 
 variable "private_eni_1" {
-	default = null
+	default = "192.168.0.20"
 }
 
 variable "private_eni_2" {
-	default = null
+	default = "192.168.1.20"
 }
