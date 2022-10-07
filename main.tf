@@ -479,16 +479,15 @@ resource "aws_ec2_transit_gateway_route" "mia_vpn" {
   blackhole                      = false
 }
 
-  data "aws_ami" "panorama_ami" {
-  most_recent = true
-  owners      = ["aws-marketplace"]
+data "aws_ami" "firewall" {
+  most_recent                               = true
+  owners                                    = ["aws-marketplace"]
 
   filter {
-    name   = "name"
-    values = ["PA-VM-AWS*"]
+    name                                    = "name"
+    values                                  = ["PA-VM-AWS-10.1.6-h6-7064e142-2859-40a4-ab62-8b0996b842e9*"]
   }
-} 
-
+}
  
 
 resource "aws_instance" "vm1" {
