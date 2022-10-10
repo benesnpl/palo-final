@@ -503,7 +503,7 @@ resource "aws_instance" "vm1" {
   ebs_optimized                        = true
   monitoring                           = false
   tags = {
-    Name = "KEYFUFWP00 - vmseries-AZ1 Palo Alto Node 1"
+    Name = "SEIXUFWP00 - vmseries-AZ1 Palo Alto Node 1"
     protera_type = "network appliance"
     protera_coid = "KEYF"
     protera_apid = "PA"
@@ -529,7 +529,7 @@ resource "aws_instance" "vm1" {
   ebs_optimized                        = true
   monitoring                           = false
   tags = {
-    Name = "KEYFUFWP00 - vmseries-AZ1 Palo Alto Node 2"
+    Name = "SEIXUFWP00 - vmseries-AZ1 Palo Alto Node 2"
     protera_type = "network appliance"
     protera_coid = "KEYF"
     protera_apid = "PA"
