@@ -12,12 +12,12 @@ variable "aws_secret_access_key" {
 
 
 variable "vpc_cidr" {
-	default = "192.168.0.0/23"
+	default = "10.112.34.0/23"
 	
 }
 
 variable "coid" {
-	default = "TEST"
+	default = "SEIX"
 }
 
 variable "azs" {
@@ -27,33 +27,33 @@ variable "azs" {
 
 variable "subnets_cidr_public" {
 	type = list
-	default = ["192.168.0.128/25","192.168.1.128/25"]
+	default = ["10.112.34.128/25","10.112.35.128/25"]
 }
 
 variable "subnets_cidr_private" {
 	type = list
-	default = ["192.168.0.16/28","192.168.1.16/28"]
+	default = ["10.112.34.16/28","10.112.35.16/28"]
 }
 
 variable "subnets_cidr_mng" {
 	type = list
-	default = ["192.168.0.0/28","192.168.1.0/28"]
+	default = ["10.112.34.0/28","10.112.35.0/28"]
 }
 
 variable "subnets_cidr_tgw" {
 	type = list
-	default = ["192.168.0.32/28","192.168.1.32/28"]
+	default = ["10.112.34.32/28","10.112.35.32/28"]
 }
 
 
 variable "subnets_cidr_gwlb" {
 	type = list
-	default = ["192.168.0.64/28","192.168.1.64/28"]
+	default = ["10.112.34.64/28","10.112.35.64/28"]
 }
 
 variable "subnets_cidr_gwlbe" {
 	type = list
-	default = ["192.168.0.48/28","192.168.1.48/28"]
+	default = ["10.112.34.48/28","10.112.35.48/28"]
 }
 
 variable "rules_inbound_public_sg" {
@@ -164,11 +164,11 @@ variable "rules_outbound_mgmt_sg" {
 }
 
 variable "il_external" {
-	default = "4.4.4.4"
+	default = "207.223.34.132"
 }
 
 variable "fl_external" {
-	default = "8.8.8.8"
+	default = "66.165.187.241"
 }
 
 variable "instance_type" {
@@ -180,25 +180,25 @@ variable "ssh_key_name" {
 }
 
 variable "mgm_ip_address1" {
-	default = "192.168.0.10"
+	default = "10.112.34.10"
 }
 
 variable "mgm_ip_address2" {
-	default = "192.168.1.10"
+	default = "10.112.35.10"
 }
 
 variable "public_eni_1" {
-	default = "192.168.0.135"
+	default = "10.112.34.135"
 }
 
 variable "public_eni_2" {
-	default = "192.168.1.135"
+	default = "10.112.35.135"
 }
 
 variable "private_eni_1" {
-	default = "192.168.0.20"
+	default = "10.112.34.20"
 }
 
 variable "private_eni_2" {
-	default = "192.168.1.20"
+	default = "10.112.35.20"
 }
