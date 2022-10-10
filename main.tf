@@ -505,9 +505,9 @@ resource "aws_instance" "vm1" {
   tags = {
     Name = "SEIXUFWP00 - vmseries-AZ1 Palo Alto Node 1"
     protera_type = "network appliance"
-    protera_coid = "KEYF"
+    protera_coid = "SEIX"
     protera_apid = "PA"
-    protera_env = "DR"
+    protera_env = "PRD"
   }
 
   root_block_device {
@@ -531,9 +531,9 @@ resource "aws_instance" "vm1" {
   tags = {
     Name = "SEIXUFWP00 - vmseries-AZ1 Palo Alto Node 2"
     protera_type = "network appliance"
-    protera_coid = "KEYF"
+    protera_coid = "EIX"
     protera_apid = "PA"
-    protera_env = "DR"
+    protera_env = "PRD"
   }
 
   root_block_device {
