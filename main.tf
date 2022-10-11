@@ -247,14 +247,14 @@ resource "aws_vpc_endpoint_service" "vpc_end_serv" {
   resource "aws_lb_target_group_attachment" "register-tgp1" {
   depends_on       = [aws_lb_target_group.tgt_group]
   target_group_arn = aws_lb_target_group.tgt_group.arn
-  target_id        = "192.168.0.20"
+  target_id        = "10.112.34.20"
   port             = 6081
 }
 
   resource "aws_lb_target_group_attachment" "register-tgp2" {
   depends_on       = [aws_lb_target_group.tgt_group]
   target_group_arn = aws_lb_target_group.tgt_group.arn
-  target_id        = "192.168.1.20"
+  target_id        = "10.112.35.20"
   port             = 6081
 }
   
