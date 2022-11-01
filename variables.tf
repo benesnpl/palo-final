@@ -176,7 +176,7 @@ variable "instance_type" {
 }
 
 variable "ssh_key_name" {
-	default = "firewall"
+	default = "firewall-sei"
 }
 
 variable "mgm_ip_address1" {
